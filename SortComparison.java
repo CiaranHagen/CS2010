@@ -20,11 +20,16 @@ import java.util.Arrays;
      */
     static double [] removeElement(double[] a, int index) {
         System.arraycopy(a, index + 1, a, index, a.length -1 - index);
+        System.out.println("Removed");
+        System.out.println(Arrays.toString(a));
         return a;
     }
     
-    static double [] insertElement(double[] a, int index) {
-        System.arraycopy(a, index, a, index +1 , a.length -1 - index);
+    static double [] insertElement(double[] a, int index, double c) {
+        System.arraycopy(a, index, a, index + 1, a.length -1 - index);
+        a[index] = c;
+        System.out.println("Inserted");
+        System.out.println(Arrays.toString(a));
         return a;
     }
     
@@ -33,16 +38,21 @@ import java.util.Arrays;
         int j = 0;
         double c;
         while (i < a.length) {
+        
+            /*System.out.println(i);
+            System.out.println(Arrays.toString(a));
+            */
             c = a[i];
             a = removeElement(a, i);//create a new array
-            i++;
-            while (j < i) {
-                if (a[j] > c) {
-                    a = insertElement(a, j);
-                    a[j] = c;
+            j = 0;
+            while (j <= i) {
+                if (a[j] > c | j == i) {
+                    a = insertElement(a, j, c);
+                    break;
                 }
                 j++;
             }
+            i++;
         }
         return a;
     }//end insertionsort
@@ -116,8 +126,7 @@ import java.util.Arrays;
 
     public static void main(String[] args) {
         double a[] = {15,3,24,19,6,5,7,12,0};
-        System.out.print(Arrays.toString(SortComparison.insertionSort(a)));
-        System.out.print("");
+        System.out.println(Arrays.toString(SortComparison.insertionSort(a)));
     }
 
  }//end class

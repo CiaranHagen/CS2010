@@ -1,4 +1,5 @@
 // -------------------------------------------------------------------------
+import java.util.Arrays;
 
 /**
  *  This class contains static methods that implementing sorting of an array of numbers
@@ -15,11 +16,35 @@
      * This method is static, thus it can be called as SortComparison.sort(a)
      * @param a: An unsorted array of doubles.
      * @return array sorted in ascending order.
-     *
+     *  System.arraycopy(src, oldIndex, src, newIndex, length);
      */
+    static double [] removeElement(double[] a, int index) {
+        System.arraycopy(a, index + 1, a, index, a.length -1 - index);
+        return a;
+    }
+    
+    static double [] insertElement(double[] a, int index) {
+        System.arraycopy(a, index, a, index +1 , a.length -1 - index);
+        return a;
+    }
+    
     static double [] insertionSort (double a[]){
-
-        //todo: implement the sort
+        int i = 1;
+        int j = 0;
+        double c;
+        while (i < a.length) {
+            c = a[i];
+            a = removeElement(a, i);//create a new array
+            i++;
+            while (j < i) {
+                if (a[j] > c) {
+                    a = insertElement(a, j);
+                    a[j] = c;
+                }
+                j++;
+            }
+        }
+        return a;
     }//end insertionsort
 
     /**
@@ -32,7 +57,7 @@
     static double [] quickSort (double a[]){
 	
 		 //todo: implement the sort
-
+        return a;
     }//end quicksort
 
     /**
@@ -53,7 +78,7 @@
     static double[] mergeSortIterative (double a[]) {
 
 		 //todo: implement the sort
-	
+	    return a;
     }//end mergesortIterative
     
     
@@ -69,7 +94,7 @@
     	
 
     	//todo: implement the sort
-	
+	    return a;
    }//end mergeSortRecursive
     	
     
@@ -83,16 +108,19 @@
     static double [] selectionSort (double a[]){
 
          //todo: implement the sort
-
+        return a;
     }//end selectionsort
 
    
 
 
     public static void main(String[] args) {
-
-        //todo: do experiments as per assignment instructions
+        double a[] = {15,3,24,19,6,5,7,12,0};
+        System.out.print(Arrays.toString(SortComparison.insertionSort(a)));
+        System.out.print("");
     }
 
  }//end class
+ 
+ 
 

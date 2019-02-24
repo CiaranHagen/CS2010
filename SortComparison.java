@@ -65,7 +65,25 @@ import java.util.Arrays;
      *
      */
     static double [] quickSort (double a[]){
-	
+	    int pivot = 0;
+	    int pivotPos = 0;
+	    double piVal = a[pivot];
+	    for (int i = 1; i<a.length; i++) {
+	        double x = a[i];
+	        if (x<=a[pivot]) {
+	            a = removeElement(a, i);
+	            a = insertElement(a, 0, x);
+	            pivotPos++;
+	        }
+	    }
+	    
+	    double[] b;
+	    double[] c;
+	    b = quicksort(System.arraycopy(a, 0, b, 0, pivotPos - 1));
+	    c = quicksort(System.arraycopy(a, pivotPos, b, 0, a.length - pivotPos));
+	    System.arraycopy(b, 0, a, 0, b.length - 1);
+	    a = insertElement(a, a.length - 1, piVal);
+	    System.arraycopy(c, 0, a, b.length, c.length - 1);
 		 //todo: implement the sort
         return a;
     }//end quicksort
@@ -126,7 +144,8 @@ import java.util.Arrays;
 
     public static void main(String[] args) {
         double a[] = {15,3,24,19,6,5,7,12,0};
-        System.out.println(Arrays.toString(SortComparison.insertionSort(a)));
+        System.out.println(Arrays.toString(SortComparison.quickSort(a)));
+        //System.out.println(Arrays.toString(SortComparison.insertionSort(a)));
     }
 
  }//end class

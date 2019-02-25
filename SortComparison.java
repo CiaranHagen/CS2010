@@ -65,39 +65,57 @@ import java.util.Arrays;
      *
      */
     static double [] quickSort (double a[]){
-        if (a.length == 0) {
-            return null;
+        if (a.length == 1) {
+            return a;
         }
-        System.out.println(Arrays.toString(a));
-	    int pivot = 0;
-	    int pivotPos = 0;
+        else if (a.length == 0) {
+            return a;
+        }
+	    int pivot = a.length/2;
+	    int pivotPos = pivot;
 	    double piVal = a[pivot];
-	    for (int i = 1; i<a.length; i++) {
+	    int i = 0;
+	    while (i<pivotPos) {
 	        double x = a[i];
-	        if (x<=a[pivotPos]) {
+	        if (x > piVal) {
 	            a = removeElement(a, i);
-	            a = insertElement(a, 0, x);
+	            a = insertElement(a, pivotPos, x);
+	            pivotPos--;
+	        }
+	        else {
+	            i++;
+	        }
+	        
+	    }
+	    i = pivotPos+1;
+	    while (i<a.length) {
+	        double x = a[i];
+	        if (x<=piVal) {
+	            a = removeElement(a, i);
+	            a = insertElement(a, pivotPos, x);
 	            pivotPos++;
 	        }
+	        i++;
 	    }
-	    System.out.println("1");
-	    double[] b;
+	    double[] b = new double[pivotPos];
 	    double[] c = new double[a.length - pivotPos];
-	    if (pivotPos == 0) {
-	        b = new double[0];
+	    System.arraycopy(a, 0, b, 0, pivotPos);
+	    System.arraycopy(a, pivotPos+1, c, 0, a.length - pivotPos-1);
+	    
+	    if (a.length != b.length) {
+	        b = quickSort(b);
 	    }
-	    else {
-	        b = new double[pivotPos -1];
-	        System.arraycopy(a, 0, b, 0, pivotPos - 1);
+	    if (c.length != a.length) {
+	        c = quickSort(c);
 	    }
-	    System.arraycopy(a, pivotPos, c, 0, a.length - pivotPos);
-	    System.out.println("2");
-	    b = quickSort(b);
-	    c = quickSort(c);
-	    System.out.println("3");
-	    System.arraycopy(b, 0, a, 0, b.length - 1);
-	    a = insertElement(a, a.length - 1, piVal);
-	    System.arraycopy(c, 0, a, b.length, c.length - 1);
+	    System.arraycopy(b, 0, a, 0, b.length);
+	    System.out.println(Arrays.toString(a));
+	    System.out.print("PP: ");
+	    System.out.println(pivotPos);
+	    System.out.println(piVal);
+	    System.out.print("Pivot: ");
+	    a = insertElement(a, pivotPos, piVal);
+	    System.arraycopy(c, 0, a, pivotPos+1, c.length);
 		 //todo: implement the sort
         return a;
     }//end quicksort
@@ -118,8 +136,53 @@ import java.util.Arrays;
      */
 
     static double[] mergeSortIterative (double a[]) {
-
-		 //todo: implement the sort
+        if (a.length == 1) {
+    	    return a;
+    	}
+        else {
+            int middle = a.length/2;
+        
+            double[] b = new double[middle];
+            double[] c = new double[a.length - middle];
+            
+            System.arraycopy(a, 0, b, 0, middle);
+            System.arraycopy(a, middle, c, 0, a.length - middle);
+	        b = insertionSort(b);
+	        c = insertionSort(c);
+	        int i = 0;
+	        int j = 0;
+	        int pos = -1;
+	        while (i<b.length | j<c.length) {
+	            pos++;
+	            
+	            double bi = 0;
+	            double cj = 0;
+	            boolean tryB = true;
+	            boolean tryC = true;
+	            
+	            if (i == b.length) {
+	                bi = b[i-1];
+	                tryB = false;
+	            } else {
+	                bi = b[i];
+	            }
+	            if (j == c.length) {
+	                cj = c[j-1];
+	                tryC = false;
+	            } else {
+	                cj = c[j];
+	            }
+                if (((bi <= cj) | (tryC == false)) & (tryB == true)) {
+                    a[pos] = bi;
+                    i++;
+                }
+                else if (((cj < bi) | (tryB == false)) & (tryC == true)) {
+                    a[pos] = cj;
+                    j++;
+                }
+	        }
+        } 
+    	//todo: implement the sort
 	    return a;
     }//end mergesortIterative
     

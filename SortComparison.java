@@ -65,22 +65,36 @@ import java.util.Arrays;
      *
      */
     static double [] quickSort (double a[]){
+        if (a.length == 0) {
+            return null;
+        }
+        System.out.println(Arrays.toString(a));
 	    int pivot = 0;
 	    int pivotPos = 0;
 	    double piVal = a[pivot];
 	    for (int i = 1; i<a.length; i++) {
 	        double x = a[i];
-	        if (x<=a[pivot]) {
+	        if (x<=a[pivotPos]) {
 	            a = removeElement(a, i);
 	            a = insertElement(a, 0, x);
 	            pivotPos++;
 	        }
 	    }
+	    System.out.println("1");
 	    
-	    double[] b;
-	    double[] c;
-	    b = quicksort(System.arraycopy(a, 0, b, 0, pivotPos - 1));
-	    c = quicksort(System.arraycopy(a, pivotPos, b, 0, a.length - pivotPos));
+	    double[] c = new double[a.length - pivotPos];
+	    if (pivotPos == 0) {
+	        double[] b = new double[0];
+	    }
+	    else {
+	        double[] b = new double[pivotPos -1];
+	        System.arraycopy(a, 0, b, 0, pivotPos - 1);
+	    }
+	    System.arraycopy(a, pivotPos, c, 0, a.length - pivotPos);
+	    System.out.println("2");
+	    b = quickSort(b);
+	    c = quickSort(c);
+	    System.out.println("3");
 	    System.arraycopy(b, 0, a, 0, b.length - 1);
 	    a = insertElement(a, a.length - 1, piVal);
 	    System.arraycopy(c, 0, a, b.length, c.length - 1);
@@ -119,8 +133,63 @@ import java.util.Arrays;
      * @return after the method returns, the array must be in ascending sorted order.
      */
     static double[] mergeSortRecursive (double a[]) {
-    	
-
+    	System.out.print("Init a:");
+    	System.out.println(Arrays.toString(a));
+    	if (a.length == 1) {
+    	    return a;
+    	}
+        else {
+            int middle = a.length/2;
+        
+            double[] b = new double[middle];
+            double[] c = new double[a.length - middle];
+            
+            System.arraycopy(a, 0, b, 0, middle);
+            System.arraycopy(a, middle, c, 0, a.length - middle);
+            b = mergeSortRecursive(b);
+	        c = mergeSortRecursive(c);
+	        
+	        int i = 0;
+	        int j = 0;
+	        int pos = -1;
+	        System.out.print("Bad a:");
+	        System.out.println(Arrays.toString(a));
+	        while (i<b.length | j<c.length) {
+	            pos++;
+	            
+	            double bi = 0;
+	            double cj = 0;
+	            boolean tryB = true;
+	            boolean tryC = true;
+	            
+	            if (i == b.length) {
+	                bi = b[i-1];
+	                tryB = false;
+	            } else {
+	                bi = b[i];
+	            }
+	            if (j == c.length) {
+	                cj = c[j-1];
+	                tryC = false;
+	            } else {
+	                cj = c[j];
+	            }
+                if (((bi <= cj) | (tryC == false)) & (tryB == true)) {
+                    a[pos] = bi;
+                    i++;
+                }
+                else if (((cj < bi) | (tryB == false)) & (tryC == true)) {
+                    a[pos] = cj;
+                    j++;
+                }
+                System.out.println(pos);
+                System.out.println(i);
+	            System.out.println(j);
+	            System.out.println(bi);
+	            System.out.println(cj);
+                System.out.println(Arrays.toString(a));
+	        }
+        } 
     	//todo: implement the sort
 	    return a;
    }//end mergeSortRecursive

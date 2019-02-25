@@ -81,13 +81,13 @@ import java.util.Arrays;
 	        }
 	    }
 	    System.out.println("1");
-	    
+	    double[] b;
 	    double[] c = new double[a.length - pivotPos];
 	    if (pivotPos == 0) {
-	        double[] b = new double[0];
+	        b = new double[0];
 	    }
 	    else {
-	        double[] b = new double[pivotPos -1];
+	        b = new double[pivotPos -1];
 	        System.arraycopy(a, 0, b, 0, pivotPos - 1);
 	    }
 	    System.arraycopy(a, pivotPos, c, 0, a.length - pivotPos);

@@ -1,5 +1,8 @@
 // -------------------------------------------------------------------------
 import java.util.Arrays;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.*;
 
 /**
  *  This class contains static methods that implementing sorting of an array of numbers
@@ -20,16 +23,16 @@ import java.util.Arrays;
      */
     static double [] removeElement(double[] a, int index) {
         System.arraycopy(a, index + 1, a, index, a.length -1 - index);
-        System.out.println("Removed");
-        System.out.println(Arrays.toString(a));
+        //System.out.println("Removed");
+        //System.out.println(Arrays.toString(a));
         return a;
     }
     
     static double [] insertElement(double[] a, int index, double c) {
         System.arraycopy(a, index, a, index + 1, a.length -1 - index);
         a[index] = c;
-        System.out.println("Inserted");
-        System.out.println(Arrays.toString(a));
+        //System.out.println("Inserted");
+        //System.out.println(Arrays.toString(a));
         return a;
     }
     
@@ -71,6 +74,7 @@ import java.util.Arrays;
         else if (a.length == 0) {
             return a;
         }
+        
 	    int pivot = a.length/2;
 	    int pivotPos = pivot;
 	    double piVal = a[pivot];
@@ -97,26 +101,18 @@ import java.util.Arrays;
 	        }
 	        i++;
 	    }
+	    if (a.length == 2) {
+            return a;
+        }
 	    double[] b = new double[pivotPos];
-	    double[] c = new double[a.length - pivotPos];
+	    double[] c = new double[a.length - pivotPos-1];
 	    System.arraycopy(a, 0, b, 0, pivotPos);
 	    System.arraycopy(a, pivotPos+1, c, 0, a.length - pivotPos-1);
 	    
-	    if (a.length != b.length) {
-	        b = quickSort(b);
-	    }
-	    if (c.length != a.length) {
-	        c = quickSort(c);
-	    }
-	    System.out.println(Arrays.toString(a));
-	    System.out.println(Arrays.toString(b));
-	    System.out.println(Arrays.toString(c));
+	    b = quickSort(b);
+	    c = quickSort(c);
+	    
 	    System.arraycopy(b, 0, a, 0, b.length);
-	    System.out.println(Arrays.toString(a));
-	    System.out.print("PP: ");
-	    System.out.println(pivotPos);
-	    System.out.println(piVal);
-	    System.out.print("Pivot: ");
 	    a = insertElement(a, pivotPos, piVal);
 	    System.arraycopy(c, 0, a, pivotPos+1, c.length);
 		 //todo: implement the sort
@@ -199,8 +195,6 @@ import java.util.Arrays;
      * @return after the method returns, the array must be in ascending sorted order.
      */
     static double[] mergeSortRecursive (double a[]) {
-    	System.out.print("Init a:");
-    	System.out.println(Arrays.toString(a));
     	if (a.length == 1) {
     	    return a;
     	}
@@ -218,8 +212,8 @@ import java.util.Arrays;
 	        int i = 0;
 	        int j = 0;
 	        int pos = -1;
-	        System.out.print("Bad a:");
-	        System.out.println(Arrays.toString(a));
+	        //System.out.print("Bad a:");
+	        //System.out.println(Arrays.toString(a));
 	        while (i<b.length | j<c.length) {
 	            pos++;
 	            
@@ -248,12 +242,6 @@ import java.util.Arrays;
                     a[pos] = cj;
                     j++;
                 }
-                System.out.println(pos);
-                System.out.println(i);
-	            System.out.println(j);
-	            System.out.println(bi);
-	            System.out.println(cj);
-                System.out.println(Arrays.toString(a));
 	        }
         } 
     	//todo: implement the sort
@@ -288,9 +276,61 @@ import java.util.Arrays;
 
 
     public static void main(String[] args) {
-        double a[] = {15,3,24,19,6,5,7,12,0};
-        System.out.println(Arrays.toString(SortComparison.selectionSort(a)));
-        //System.out.println(Arrays.toString(SortComparison.insertionSort(a)));
+        double[] a = new double[1000];
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("./numbersNearlyOrdered1000.txt"));
+            try {
+                String line = br.readLine();
+                int count = 0;
+                while (line != null) {
+                    double x = Double.parseDouble(line);
+                    a[count] = x;;
+                    line = br.readLine();
+                    count++;
+                }
+            } finally {
+                br.close();
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(Arrays.toString(a));
+        
+        System.out.println("Insertion sort: ");
+        long startTime = System.nanoTime();
+        SortComparison.insertionSort(a);
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        System.out.println(duration);
+        
+        System.out.println("Quicksort: ");
+        startTime = System.nanoTime();
+        SortComparison.quickSort(a);
+        endTime = System.nanoTime();
+        duration = (endTime - startTime);
+        System.out.println(duration);
+        
+        System.out.println("Merge sort i.: ");
+        startTime = System.nanoTime();
+        SortComparison.mergeSortIterative(a);
+        endTime = System.nanoTime();
+        duration = (endTime - startTime);
+        System.out.println(duration);
+        
+        System.out.println("Merge sort r.: ");
+        startTime = System.nanoTime();
+        SortComparison.mergeSortRecursive(a);
+        endTime = System.nanoTime();
+        duration = (endTime - startTime);
+        System.out.println(duration);
+        
+        System.out.println("Selection sort: ");
+        startTime = System.nanoTime();
+        SortComparison.selectionSort(a);
+        endTime = System.nanoTime();
+        duration = (endTime - startTime);
+        System.out.println(duration);
+        
     }
 
  }//end class

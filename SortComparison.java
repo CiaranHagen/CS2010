@@ -108,6 +108,9 @@ import java.util.Arrays;
 	    if (c.length != a.length) {
 	        c = quickSort(c);
 	    }
+	    System.out.println(Arrays.toString(a));
+	    System.out.println(Arrays.toString(b));
+	    System.out.println(Arrays.toString(c));
 	    System.arraycopy(b, 0, a, 0, b.length);
 	    System.out.println(Arrays.toString(a));
 	    System.out.print("PP: ");
@@ -267,7 +270,17 @@ import java.util.Arrays;
      */
     static double [] selectionSort (double a[]){
 
-         //todo: implement the sort
+         for (int i = 0; i<a.length; i++) {
+            int test = i;
+            for (int j = i+1; j<a.length; j++) {
+                if (a[j]<a[test]) {
+                    test = j;
+                }
+            }
+            double inter = a[test];
+            a[test] = a[i];
+            a[i] = inter;
+         }
         return a;
     }//end selectionsort
 
@@ -276,7 +289,7 @@ import java.util.Arrays;
 
     public static void main(String[] args) {
         double a[] = {15,3,24,19,6,5,7,12,0};
-        System.out.println(Arrays.toString(SortComparison.quickSort(a)));
+        System.out.println(Arrays.toString(SortComparison.selectionSort(a)));
         //System.out.println(Arrays.toString(SortComparison.insertionSort(a)));
     }
 

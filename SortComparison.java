@@ -258,15 +258,13 @@ import java.io.*;
     }//end selectionsort
 
     public static void main(String[] args) {
-    
-        double[] a = {1.0, 5.0, 6.0, 3.0, 12.0};
-        System.out.println(Arrays.toString(SortComparison.selectionSort(a)));
         //The commented stuff was to run the timing tests.
+        //I replaced the array length and the path to get the values when testing.
         
         /*
-        double[] a = new double[1000];
+        double[] a = new double[1000]; //must replace this value to test
         try {
-            BufferedReader br = new BufferedReader(new FileReader("./numbersSorted1000.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("./numbersSorted1000.txt")); //check path when testing.
             try {
                 String line = br.readLine();
                 int count = 0;

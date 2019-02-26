@@ -13,7 +13,7 @@ import java.io.*;
  */
 
  class SortComparison {
-
+ 
     /**
      * Sorts an array of doubles using InsertionSort.
      * This method is static, thus it can be called as SortComparison.sort(a)
@@ -23,16 +23,12 @@ import java.io.*;
      */
     static double [] removeElement(double[] a, int index) {
         System.arraycopy(a, index + 1, a, index, a.length -1 - index);
-        //System.out.println("Removed");
-        //System.out.println(Arrays.toString(a));
         return a;
     }
     
     static double [] insertElement(double[] a, int index, double c) {
         System.arraycopy(a, index, a, index + 1, a.length -1 - index);
         a[index] = c;
-        //System.out.println("Inserted");
-        //System.out.println(Arrays.toString(a));
         return a;
     }
     
@@ -41,12 +37,8 @@ import java.io.*;
         int j = 0;
         double c;
         while (i < a.length) {
-        
-            /*System.out.println(i);
-            System.out.println(Arrays.toString(a));
-            */
             c = a[i];
-            a = removeElement(a, i);//create a new array
+            a = removeElement(a, i);
             j = 0;
             while (j <= i) {
                 if (a[j] > c | j == i) {
@@ -58,7 +50,7 @@ import java.io.*;
             i++;
         }
         return a;
-    }//end insertionsort
+    }
 
     /**
      * Sorts an array of doubles using Quick Sort.
@@ -115,7 +107,6 @@ import java.io.*;
 	    System.arraycopy(b, 0, a, 0, b.length);
 	    a = insertElement(a, pivotPos, piVal);
 	    System.arraycopy(c, 0, a, pivotPos+1, c.length);
-		 //todo: implement the sort
         return a;
     }//end quicksort
 
@@ -180,12 +171,9 @@ import java.io.*;
                     j++;
                 }
 	        }
-        } 
-    	//todo: implement the sort
+        }
 	    return a;
     }//end mergesortIterative
-    
-    
     
     /**
      * Sorts an array of doubles using recursive implementation of Merge Sort.
@@ -212,8 +200,6 @@ import java.io.*;
 	        int i = 0;
 	        int j = 0;
 	        int pos = -1;
-	        //System.out.print("Bad a:");
-	        //System.out.println(Arrays.toString(a));
 	        while (i<b.length | j<c.length) {
 	            pos++;
 	            
@@ -244,7 +230,6 @@ import java.io.*;
                 }
 	        }
         } 
-    	//todo: implement the sort
 	    return a;
    }//end mergeSortRecursive
     	
@@ -272,13 +257,16 @@ import java.io.*;
         return a;
     }//end selectionsort
 
-   
-
-
     public static void main(String[] args) {
+    
+        double[] a = {1.0, 5.0, 6.0, 3.0, 12.0};
+        System.out.println(Arrays.toString(SortComparison.selectionSort(a)));
+        //The commented stuff was to run the timing tests.
+        
+        /*
         double[] a = new double[1000];
         try {
-            BufferedReader br = new BufferedReader(new FileReader("./numbersNearlyOrdered1000.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("./numbersSorted1000.txt"));
             try {
                 String line = br.readLine();
                 int count = 0;
@@ -330,6 +318,7 @@ import java.io.*;
         endTime = System.nanoTime();
         duration = (endTime - startTime);
         System.out.println(duration);
+        */
         
     }
 

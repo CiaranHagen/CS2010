@@ -8,7 +8,7 @@ import java.io.*;
  *  This class contains static methods that implementing sorting of an array of numbers
  *  using different sort algorithms.
  *
- *  @author
+ *  @Ciaran J. Hagen
  *  @version HT 2019
  */
 
